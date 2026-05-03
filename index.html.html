@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رياض المناهل</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1eb;--surface:#fff;--surface2:#ede9e0;--border:#d8d2c4;
+  --green:#2d6a4f;--green2:#40916c;--green3:#52b788;--greenlt:#d8f3dc;
+  --gold:#a47a1e;--goldlt:#fdf3dc;
+  --text:#1c1a16;--muted:#7a7060;--danger:#b83232;--warn:#e07a00;
+  --r:12px;--sh:0 2px 12px rgba(0,0,0,.07);--shl:0 8px 32px rgba(0,0,0,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.screen{display:none;width:100%;min-height:100vh}
+.screen.active{display:flex;flex-direction:column;align-items:center}
+
+/* LANDING */
+#landing{justify-content:center;
+  background:radial-gradient(ellipse at 20% 20%,rgba(45,106,79,.1) 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 80%,rgba(164,122,30,.08) 0%,transparent 55%),var(--bg);
+  position:relative;overflow:hidden}
+#landing::before{content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(45,106,79,.06) 1px,transparent 1px);
+  background-size:30px 30px;pointer-events:none}
+.land-inner{text-align:center;padding:48px 20px;max-width:520px;width:100%;position:relative;z-index:1}
+.emblem{width:90px;height:90px;background:linear-gradient(145deg,var(--green),var(--green2));
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;font-size:2.4rem;box-shadow:0 6px 28px rgba(45,106,79,.3)}
+.school-ar{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:var(--green);line-height:1;margin-bottom:4px}
+.school-fr{font-size:.75rem;color:var(--gold);letter-spacing:3.5px;text-transform:uppercase;font-weight:500;margin-bottom:8px}
+.school-tag{font-size:.72rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;margin-bottom:44px}
+.cards{display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:18px;
+  padding:32px 28px;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);
+  min-width:170px;flex:1;box-shadow:var(--sh);position:relative;overflow:hidden}
+.card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--green),var(--green3));opacity:0;transition:.3s}
+.card:hover{border-color:var(--green);transform:translateY(-5px);box-shadow:0 14px 36px rgba(45,106,79,.18)}
+.card:hover::after{opacity:1}
+.card-icon{font-size:2.4rem;margin-bottom:14px;display:block}
+.card h3{font-size:1rem;font-weight:600}
+.card p{font-size:.76rem;color:var(--muted);margin-top:5px}
+
+/* LOGIN */
+#t-login,#d-login{justify-content:center;background:var(--bg)}
+.lbox{background:var(--surface);border:1.5px solid var(--border);border-radius:20px;
+  padding:48px 42px;max-width:420px;width:92%;box-shadow:var(--shl)}
+.lbox-logo{text-align:center;margin-bottom:26px}
+.lbox-logo .dot{width:54px;height:54px;background:linear-gradient(145deg,var(--green),var(--green2));
+  border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:10px;box-shadow:0 4px 16px rgba(45,106,79,.25)}
+.lbox-logo .nm{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--green);font-weight:700}
+.lbox h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--green);text-align:center;margin-bottom:4px}
+.lbox .sub{color:var(--muted);font-size:.78rem;text-align:center;margin-bottom:28px}
+.fld{margin-bottom:18px}
+.fld label{display:block;font-size:.68rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px;font-family:'IBM Plex Mono',monospace;font-weight:500}
+.fld select,.fld input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 15px;color:var(--text);font-family:'IBM Plex Sans Arabic',sans-serif;font-size:.92rem;transition:all .2s;outline:none}
+.fld select:focus,.fld input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(45,106,79,.1)}
+.btn{width:100%;padding:13px;background:linear-gradient(145deg,var(--green),var(--green2));color:#fff;border:none;border-radius:10px;font-family:'IBM Plex Sans Arabic',sans-serif;font-weight:600;font-size:.95rem;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(45,106,79,.25)}
+.btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--border);box-shadow:none;margin-top:10px}
+.btn-ghost:hover{background:var(--surface2);color:var(--text);filter:none;transform:none}
+.btn-gold{background:linear-gradient(145deg,var(--gold),#c49a2a);box-shadow:0 4px 16px rgba(164,122,30,.25)}
+.btn-sm{width:auto;padding:9px 20px;font-size:.83rem}
+.btn-danger{background:linear-gradient(145deg,var(--danger),#c94040)}
+.err{color:var(--danger);font-size:.8rem;margin-bottom:14px;display:none;padding:10px 14px;background:rgba(184,50,50,.06);border-radius:8px;border:1px solid rgba(184,50,50,.2)}
+
+/* TOPBAR */
+.topbar{width:100%;background:var(--surface);border-bottom:1.5px solid var(--border);padding:13px 28px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.05);position:sticky;top:0;z-index:50}
+.topbar-brand{display:flex;align-items:center;gap:12px}
+.topbar-dot{width:38px;height:38px;background:linear-gradient(145deg,var(--green),var(--green2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:700;color:var(--green);line-height:1}
+.brand-role{font-size:.66rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-family:'IBM Plex Mono',monospace}
+.topbar-right{display:flex;align-items:center;gap:14px;font-size:.83rem;color:var(--muted)}
+.topbar-right strong{color:var(--text);font-weight:600}
+.logout{background:transparent;border:1.5px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:8px;cursor:pointer;font-size:.76rem;font-family:'IBM Plex Sans Arabic',sans-serif;transition:all .2s}
+.logout:hover{border-color:var(--danger);color:var(--danger);background:rgba(184,50,50,.05)}
+
+/* LAYOUT */
+#t-dash,#d-dash{flex-direction:column}
+.content{max-width:800px;width:100%;margin:28px auto;padding:0 20px}
+.dcontent{max-width:1060px;width:100%;margin:28px auto;padding:0 20px}
+.stitle{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;margin-bottom:4px}
+.ssub{color:var(--muted);font-size:.75rem;margin-bottom:22px;font-family:'IBM Plex Mono',monospace}
+
+/* STATS */
+.stats{display:flex;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+.sc{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:18px 20px;flex:1;min-width:120px;box-shadow:var(--sh);position:relative;overflow:hidden}
+.sc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--green3))}
+.sc.gold::after{background:linear-gradient(90deg,var(--gold),#c49a2a)}
+.sc.red::after{background:linear-gradient(90deg,var(--danger),#e05252)}
+.sc .v{font-family:'IBM Plex Mono',monospace;font-size:1.75rem;font-weight:500;color:var(--green)}
+.sc.gold .v{color:var(--gold)}.sc.red .v{color:var(--danger)}
+.sc .l{font-size:.68rem;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.8px}
+
+/* FORM */
+.form-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:24px;box-shadow:var(--sh)}
+.form-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.form-row .fld{flex:1;min-width:130px;margin-bottom:0}
+.flabel{font-size:.68rem;font-weight:600;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;font-family:'IBM Plex Mono',monospace;display:block}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1.5px solid var(--border);margin-bottom:18px;flex-wrap:wrap}
+.tab{padding:9px 18px;cursor:pointer;font-size:.83rem;color:var(--muted);border-bottom:2.5px solid transparent;transition:all .2s;margin-bottom:-1.5px;font-weight:500}
+.tab.on{color:var(--green);border-bottom-color:var(--green)}
+.tab:hover{color:var(--text)}
+.tc{display:none}.tc.on{display:block}
+
+/* TABLE */
+.tw{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);margin-bottom:24px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.84rem}
+th{text-align:left;padding:11px 15px;font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);border-bottom:1.5px solid var(--border);background:var(--surface2);font-weight:500}
+td{padding:12px 15px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--surface2)}
+.hc{font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--green)}
+.sc2{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--gold)}
+.rc{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--danger)}
+.pc{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--green)}
+.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.7rem;font-family:'IBM Plex Mono',monospace;background:var(--greenlt);color:var(--green);border:1px solid rgba(45,106,79,.2)}
+.badge-warn{background:#fff3e0;color:var(--warn);border-color:rgba(224,122,0,.25)}
+.badge-ok{background:var(--greenlt);color:var(--green);border-color:rgba(45,106,79,.25)}
+.badge-no{background:#fef0f0;color:var(--danger);border-color:rgba(184,50,50,.2)}
+.db{background:transparent;border:1.5px solid rgba(184,50,50,.25);color:var(--danger);padding:3px 9px;border-radius:6px;cursor:pointer;font-size:.7rem;transition:all .2s}
+.db:hover{background:rgba(184,50,50,.07)}
+.pb{background:transparent;border:1.5px solid rgba(45,106,79,.3);color:var(--green);padding:4px 11px;border-radius:6px;cursor:pointer;font-size:.75rem;font-weight:600;transition:all .2s}
+.pb:hover{background:var(--greenlt)}
+.vb{background:transparent;border:1.5px solid rgba(45,106,79,.4);color:var(--green);padding:4px 11px;border-radius:6px;cursor:pointer;font-size:.75rem;font-weight:600;transition:all .2s}
+.vb:hover{background:var(--greenlt)}
+.empty{text-align:center;padding:44px;color:var(--muted);font-size:.85rem}
+
+/* SCHEDULE SLOTS */
+.slot-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:16px 20px;margin-bottom:12px;display:flex;align-items:center;gap:16px;box-shadow:var(--sh);transition:all .2s;cursor:pointer}
+.slot-card:hover{border-color:var(--green);background:var(--surface2)}
+.slot-card.checked{border-color:var(--green);background:rgba(45,106,79,.05)}
+.slot-check{width:22px;height:22px;accent-color:var(--green);cursor:pointer;flex-shrink:0}
+.slot-info{flex:1}
+.slot-day{font-weight:600;font-size:.9rem;margin-bottom:3px}
+.slot-time{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--green)}
+.slot-note{font-size:.75rem;color:var(--muted);margin-top:2px}
+.slot-dur{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--gold);font-weight:500}
+
+/* MODAL */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.mo.on{display:flex}
+.mbox{background:var(--surface);border-radius:18px;padding:34px;max-width:560px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:var(--shl)}
+.mbox h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--green);margin-bottom:4px}
+.mbox .sub{color:var(--muted);font-size:.75rem;margin-bottom:20px;font-family:'IBM Plex Mono',monospace}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--surface);border:1.5px solid var(--green);color:var(--green);padding:12px 22px;border-radius:10px;font-size:.81rem;font-family:'IBM Plex Mono',monospace;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;z-index:999;box-shadow:var(--shl)}
+.toast.on{opacity:1;transform:translateY(0)}
+
+/* SCHEDULE EDITOR */
+.day-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;padding:10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg)}
+.day-row.active-day{border-color:var(--green);background:rgba(45,106,79,.04)}
+.day-label{font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:500;color:var(--text);min-width:95px}
+.day-check{width:18px;height:18px;accent-color:var(--green);cursor:pointer}
+.day-inputs{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.day-inputs input[type=time]{width:108px;padding:6px 10px;font-size:.82rem;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;outline:none;color:var(--text)}
+.day-inputs input[type=time]:focus{border-color:var(--green)}
+.day-inputs input[type=text]{width:160px;padding:6px 10px;font-size:.82rem;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;outline:none;color:var(--text)}
+.day-inputs input[type=text]:focus{border-color:var(--green)}
+.day-inputs span{font-size:.75rem;color:var(--muted)}
+
+@media(max-width:540px){
+  .form-row{flex-direction:column}.stats{flex-direction:column}
+  .lbox{padding:30px 22px}th,td{padding:9px 10px;font-size:.76rem}
+  .day-inputs{flex-direction:column;align-items:flex-start}
+}
+/* CALENDAR */
+.cal-wrap{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:22px;box-shadow:var(--sh)}
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-header .cal-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--text)}
+.cal-nav{background:transparent;border:1.5px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.cal-nav:hover{border-color:var(--green);color:var(--green)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-day-name{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--muted);padding:4px 0;letter-spacing:.5px;text-transform:uppercase}
+.cal-cell{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;transition:all .2s;border:1.5px solid transparent;position:relative;font-size:.82rem;font-weight:500;min-height:38px}
+.cal-cell:hover{background:var(--surface2);border-color:var(--border)}
+.cal-cell.empty{cursor:default;pointer-events:none}
+.cal-cell.other-month{color:var(--border)}
+.cal-cell.today-cell{border-color:var(--green);color:var(--green);font-weight:700}
+.cal-cell.has-slot{background:rgba(45,106,79,.06)}
+.cal-cell.pointed{background:var(--greenlt)}
+.cal-cell.pointed::after{content:'✓';position:absolute;bottom:2px;right:4px;font-size:.55rem;color:var(--green);font-weight:700}
+.cal-cell.selected{background:var(--green);color:#fff;border-color:var(--green)}
+.cal-cell.selected::after{color:#fff}
+.cal-cell.no-slot{opacity:.4;cursor:default}
+.cal-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);position:absolute;bottom:4px;left:50%;transform:translateX(-50%)}
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="landing" class="screen active">
+  <div class="land-inner">
+    <div class="emblem">🌿</div>
+    <div class="school-ar">Riad Al Manahil</div>
+    <div class="school-fr">École Privée · رياض المناهل</div>
+    <div class="school-tag">Plateforme de gestion des heures</div>
+    <div class="cards">
+      <div class="card" onclick="goTLogin()">
+        <span class="card-icon">👨‍🏫</span>
+        <h3>Professeur</h3>
+        <p>Pointer mes heures de cours</p>
+      </div>
+      <div class="card" onclick="go('d-login')">
+        <span class="card-icon">🏫</span>
+        <h3>Direction</h3>
+        <p>Tableau de bord & validation</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEACHER LOGIN -->
+<div id="t-login" class="screen">
+  <div class="lbox">
+    <div class="lbox-logo"><div class="dot">🌿</div><div class="nm">Riad Al Manahil</div></div>
+    <h2>Espace Professeur</h2>
+    <p class="sub">Choisissez votre nom et entrez votre code</p>
+    <div class="fld"><label>Professeur</label>
+      <select id="ts"><option value="">— Choisir —</option></select></div>
+    <div class="fld"><label>Code secret</label>
+      <input type="password" id="tp" placeholder="••••" maxlength="10"></div>
+    <div class="err" id="te">Code incorrect.</div>
+    <button class="btn" onclick="tLogin()">Se connecter</button>
+    <button class="btn btn-ghost" onclick="go('landing')">← Retour</button>
+  </div>
+</div>
+
+<!-- DIRECTOR LOGIN -->
+<div id="d-login" class="screen">
+  <div class="lbox">
+    <div class="lbox-logo"><div class="dot">🌿</div><div class="nm">Riad Al Manahil</div></div>
+    <h2>Espace Direction</h2>
+    <p class="sub">Accès réservé à la direction</p>
+    <div class="fld"><label>Code directeur</label>
+      <input type="password" id="dp" placeholder="••••••" maxlength="20"></div>
+    <div class="err" id="de">Code incorrect.</div>
+    <button class="btn" onclick="dLogin()">Se connecter</button>
+    <button class="btn btn-ghost" onclick="go('landing')">← Retour</button>
+  </div>
+</div>
+
+<!-- TEACHER DASHBOARD -->
+<div id="t-dash" class="screen">
+  <div class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-dot">🌿</div>
+      <div><div class="brand-name">Riad Al Manahil</div><div class="brand-role">Espace Professeur</div></div>
+    </div>
+    <div class="topbar-right"><strong id="tname"></strong>
+      <button class="logout" onclick="logout()">Déconnexion</button></div>
+  </div>
+  <div class="content">
+    <div class="stitle">Mes heures de cours</div>
+    <div class="ssub" id="tmonth"></div>
+
+    <div class="stats">
+      <div class="sc"><div class="v" id="st0">0h</div><div class="l">Aujourd'hui</div></div>
+      <div class="sc"><div class="v" id="st1">0h</div><div class="l">Ce mois</div></div>
+      <div class="sc"><div class="v" id="st2">0h</div><div class="l">Total général</div></div>
+      <div class="sc gold"><div class="v" id="st3">0 MAD</div><div class="l">Salaire ce mois</div></div>
+    </div>
+
+    <!-- CALENDRIER + POINTAGE -->
+    <div class="cal-wrap">
+      <div class="cal-header">
+        <button class="cal-nav" onclick="calNav(-1)">‹</button>
+        <div class="cal-title" id="cal-title"></div>
+        <button class="cal-nav" onclick="calNav(1)">›</button>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+
+    <div class="form-box" id="t-pointer-box">
+      <span class="flabel" id="t-pointer-label">Pointer mes heures</span>
+      <div id="t-slots-today"></div>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-sm" onclick="submitPointing()">✓ Envoyer le pointage</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab on" onclick="tTab('tt0')">Pointages</div>
+      <div class="tab" onclick="tTab('tt1')">Ce mois</div>
+      <div class="tab" onclick="tTab('tt2')">Tout</div>
+    </div>
+
+    <div id="tt0" class="tc on">
+      <div class="tw"><table><thead><tr><th>Date</th><th>Jour</th><th>Début</th><th>Fin</th><th>Durée</th><th>Montant</th><th>Statut</th></tr></thead>
+      <tbody id="r0"></tbody></table><div class="empty" id="e0">Aucun pointage.</div></div>
+    </div>
+    <div id="tt1" class="tc">
+      <div class="tw"><table><thead><tr><th>Date</th><th>Jour</th><th>Début</th><th>Fin</th><th>Durée</th><th>Montant</th><th>Matière</th><th>Statut</th></tr></thead>
+      <tbody id="r1"></tbody></table><div class="empty" id="e1">Aucune entrée ce mois.</div></div>
+    </div>
+    <div id="tt2" class="tc">
+      <div class="tw"><table><thead><tr><th>Date</th><th>Jour</th><th>Début</th><th>Fin</th><th>Durée</th><th>Montant</th><th>Matière</th><th>Statut</th></tr></thead>
+      <tbody id="r2"></tbody></table><div class="empty" id="e2">Aucune entrée.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- DIRECTOR DASHBOARD -->
+<div id="d-dash" class="screen">
+  <div class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-dot">🌿</div>
+      <div><div class="brand-name">Riad Al Manahil</div><div class="brand-role">Direction</div></div>
+    </div>
+    <div class="topbar-right"><strong>Direction</strong>
+      <button class="logout" onclick="logout()">Déconnexion</button></div>
+  </div>
+  <div class="dcontent">
+    <div class="tabs" style="margin-bottom:28px">
+      <div class="tab on" onclick="dTab('dq')">🏠 Accueil</div>
+      <div class="tab" onclick="dTab('do')">Vue d'ensemble</div>
+      <div class="tab" onclick="dTab('dv')">Validation</div>
+      <div class="tab" onclick="dTab('de')">Détail heures</div>
+      <div class="tab" onclick="dTab('ds')">Tableaux de service</div>
+      <div class="tab" onclick="dTab('dt')">Professeurs</div>
+    </div>
+
+    <!-- ACCUEIL RAPIDE -->
+    <div id="dq" class="tc on">
+      <div class="stitle">Bonjour 👋</div>
+      <div class="ssub" id="dq-date"></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px">Heures ce mois — tous les professeurs</div>
+      <div id="dq-cards" style="display:flex;flex-direction:column;gap:12px"></div>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div id="do" class="tc">
+      <div class="stitle">Tableau de bord</div>
+      <div class="ssub" id="dmonth"></div>
+      <div style="display:flex;gap:12px;align-items:flex-end;margin-bottom:22px;flex-wrap:wrap">
+        <div class="fld" style="margin-bottom:0;min-width:160px"><label>Mois</label>
+          <input type="month" id="dfm"></div>
+        <button class="btn btn-sm" onclick="loadOverview()">Actualiser</button>
+        <button class="btn btn-sm btn-ghost" style="margin-top:0" onclick="exportCSV()">⬇ Excel</button>
+      </div>
+      <div class="stats">
+        <div class="sc"><div class="v" id="dn0">0</div><div class="l">Professeurs</div></div>
+        <div class="sc"><div class="v" id="dn1">0h</div><div class="l">Heures totales</div></div>
+        <div class="sc gold"><div class="v" id="dn2">0 MAD</div><div class="l">Total salaires</div></div>
+        <div class="sc gold"><div class="v" id="dn3">0 MAD</div><div class="l">Déjà payé</div></div>
+        <div class="sc red"><div class="v" id="dn4">0 MAD</div><div class="l">Reste à payer</div></div>
+      </div>
+      <div class="tw">
+        <table><thead><tr><th>Professeur</th><th>Matière</th><th>Taux/h</th><th>Heures</th><th>Salaire</th><th>Payé</th><th>Reste</th><th>Actions</th></tr></thead>
+        <tbody id="ovr"></tbody></table>
+      </div>
+    </div>
+
+    <!-- VALIDATION -->
+    <div id="dv" class="tc">
+      <div class="stitle">Validation des pointages</div>
+      <div class="ssub">Cliquez sur un professeur pour voir et valider ses pointages</div>
+
+      <!-- Prof cards -->
+      <div id="dv-prof-list" style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px"></div>
+
+      <!-- Detail panel -->
+      <div id="dv-detail" style="display:none">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <button onclick="closeDvDetail()" style="background:transparent;border:1.5px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:8px;cursor:pointer;font-size:.78rem">← Retour</button>
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700" id="dv-prof-name"></div>
+            <div style="font-size:.75rem;color:var(--muted);font-family:'IBM Plex Mono',monospace" id="dv-prof-sub"></div>
+          </div>
+        </div>
+
+        <!-- Schedule view -->
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Tableau de service</div>
+        <div class="tw" style="margin-bottom:20px">
+          <table><thead><tr><th>Jour</th><th>Début</th><th>Fin</th><th>Durée</th><th>Matière</th></tr></thead>
+          <tbody id="dv-sch-rows"></tbody></table>
+          <div class="empty" id="dv-sch-empty" style="padding:16px">Aucun horaire défini.</div>
+        </div>
+
+        <!-- Pointages -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase">Pointages soumis</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-sm" style="background:linear-gradient(145deg,var(--green),var(--green2));padding:6px 14px;font-size:.75rem" onclick="validateAllPending()">✓ Valider tout en attente</button>
+          </div>
+        </div>
+        <div class="tw">
+          <table><thead><tr><th>Date</th><th>Jour</th><th>Début</th><th>Fin</th><th>Durée</th><th>Matière</th><th>Statut</th><th>Actions</th></tr></thead>
+          <tbody id="dv-point-rows"></tbody></table>
+          <div class="empty" id="dv-point-empty" style="padding:16px">Aucun pointage.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAIL HEURES -->
+    <div id="de" class="tc">
+      <div class="stitle">Détail des heures</div>
+      <div class="ssub">Toutes les heures par professeur</div>
+      <div style="display:flex;gap:12px;align-items:flex-end;margin-bottom:20px;flex-wrap:wrap">
+        <div class="fld" style="margin-bottom:0;min-width:160px"><label>Mois</label>
+          <input type="month" id="dem"></div>
+        <div class="fld" style="margin-bottom:0;min-width:160px"><label>Professeur</label>
+          <select id="det"><option value="">Tous</option></select></div>
+        <div class="fld" style="margin-bottom:0;min-width:140px"><label>Statut</label>
+          <select id="de-status">
+            <option value="">Tous</option>
+            <option value="validated">Validé</option>
+            <option value="pending">En attente</option>
+            <option value="rejected">Rejeté</option>
+          </select></div>
+        <button class="btn btn-sm" onclick="loadEntries()">Filtrer</button>
+      </div>
+      <div class="tw"><table><thead><tr><th>Professeur</th><th>Date</th><th>Jour</th><th>Début</th><th>Fin</th><th>Durée</th><th>Montant</th><th>Matière</th><th>Statut</th></tr></thead>
+        <tbody id="etr"></tbody></table>
+        <div class="empty" id="eem">Aucune entrée.</div></div>
+    </div>
+
+    <!-- TABLEAUX DE SERVICE -->
+    <div id="ds" class="tc">
+      <div class="stitle">Tableaux de service</div>
+      <div class="ssub">Définir l'horaire fixe de chaque professeur</div>
+      <div style="display:flex;gap:12px;align-items:flex-end;margin-bottom:20px;flex-wrap:wrap">
+        <div class="fld" style="margin-bottom:0;min-width:220px"><label>Sélectionner un professeur</label>
+          <select id="ssp" onchange="loadScheduleEditor()"><option value="">— Choisir —</option></select></div>
+      </div>
+      <div id="sch-editor" style="display:none">
+        <div class="form-box">
+          <span class="flabel" id="sch-title">Horaire de —</span>
+          <div id="sch-days"></div>
+          <button class="btn btn-sm" style="margin-top:8px" onclick="saveSchedule()">💾 Enregistrer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFESSEURS -->
+    <div id="dt" class="tc">
+      <div class="stitle">Gestion des professeurs</div>
+      <div class="ssub">Ajouter, modifier taux, supprimer</div>
+      <div class="form-box">
+        <span class="flabel">Nouveau professeur</span>
+        <div class="form-row">
+          <div class="fld"><label>Nom complet</label><input type="text" id="nn" placeholder="Mohammed Alami"></div>
+          <div class="fld"><label>Code secret</label><input type="text" id="nc" placeholder="1234"></div>
+        </div>
+        <div class="form-row">
+          <div class="fld"><label>Matière</label><input type="text" id="nm" placeholder="Mathématiques"></div>
+          <div class="fld"><label>Taux/h (MAD)</label><input type="number" id="nr" placeholder="80" min="0" step="5"></div>
+        </div>
+        <button class="btn btn-sm" onclick="addTeacher()">＋ Ajouter</button>
+      </div>
+      <div class="tw"><table><thead><tr><th>Nom</th><th>Matière</th><th>Code</th><th>Taux/h</th><th></th></tr></thead>
+        <tbody id="ttr"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- SALARY MODAL -->
+<div class="mo" id="smo">
+  <div class="mbox">
+    <h3 id="smt"></h3><p class="sub" id="sms"></p>
+    <div class="stats" style="margin-bottom:20px">
+      <div class="sc"><div class="v" id="sm0">0</div><div class="l">Salaire brut</div></div>
+      <div class="sc gold"><div class="v" id="sm1">0</div><div class="l">Payé</div></div>
+      <div class="sc red"><div class="v" id="sm2">0</div><div class="l">Reste</div></div>
+    </div>
+    <div class="form-box" style="margin-bottom:16px">
+      <span class="flabel">Enregistrer un paiement</span>
+      <div class="form-row">
+        <div class="fld"><label>Montant (MAD)</label><input type="number" id="spa" placeholder="ex: 1200" min="0"></div>
+        <div class="fld"><label>Note</label><input type="text" id="spn" placeholder="Virement..."></div>
+      </div>
+      <button class="btn btn-gold btn-sm" onclick="savePay()">✓ Enregistrer</button>
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Historique paiements</div>
+    <div class="tw" style="margin-bottom:20px">
+      <table><thead><tr><th>Date</th><th>Montant</th><th>Note</th><th></th></tr></thead>
+        <tbody id="shist"></tbody></table>
+      <div class="empty" id="sem" style="padding:20px">Aucun paiement.</div>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="closeModal()">Fermer</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const DIR_PIN = 'Riad@2025';
+const DAYS = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+const DAY_NAMES = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+
+// ── DATA ──────────────────────────────────────────
+function load(){
+  return JSON.parse(localStorage.getItem('rm5')||JSON.stringify({
+    teachers:[],entries:[],salaries:[]
+  }));
+}
+function save(d){localStorage.setItem('rm5',JSON.stringify(d));}
+
+// ── UTILS ─────────────────────────────────────────
+function mins(s,e){
+  if(!s||!e)return 0;
+  const[sh,sm]=String(s).split(':').map(Number);
+  const[eh,em]=String(e).split(':').map(Number);
+  const m=(eh*60+em)-(sh*60+sm);return m>0?m:0;
+}
+function dur(m){const h=Math.floor(m/60),r=m%60;return h+'h'+(r?r.toString().padStart(2,'0'):'');}
+function fd(d){if(!d)return'—';const[y,mo,day]=String(d).split('-');return`${day}/${mo}/${y}`;}
+function fm(n){return Math.round(Number(n)).toLocaleString('fr-MA')+' MAD';}
+function nowM(){return new Date().toISOString().slice(0,7);}
+function nowD(){return new Date().toISOString().split('T')[0];}
+function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
+function dayName(dateStr){return DAY_NAMES[new Date(dateStr).getDay()];}
+
+function statusBadge(s){
+  if(s==='validated') return '<span class="badge badge-ok">✓ Validé</span>';
+  if(s==='rejected')  return '<span class="badge badge-no">✗ Rejeté</span>';
+  return '<span class="badge badge-warn">⏳ En attente</span>';
+}
+
+function toast(msg,err=false){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.borderColor=err?'var(--danger)':'var(--green)';
+  t.style.color=err?'var(--danger)':'var(--green)';
+  t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2600);
+}
+
+// ── NAV ───────────────────────────────────────────
+let curT=null;
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function logout(){curT=null;go('landing');}
+
+// ── TEACHER LOGIN ─────────────────────────────────
+function goTLogin(){
+  go('t-login');
+  const sel=document.getElementById('ts');
+  const d=load();
+  sel.innerHTML='<option value="">— Choisir —</option>';
+  d.teachers.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.name;sel.appendChild(o);});
+}
+
+function tLogin(){
+  const id=document.getElementById('ts').value;
+  const pin=document.getElementById('tp').value;
+  const err=document.getElementById('te');
+  if(!id){err.textContent='Choisissez un professeur.';err.style.display='block';return;}
+  const d=load();
+  const t=d.teachers.find(x=>x.id===id);
+  if(!t||String(t.pin)!==pin){err.style.display='block';return;}
+  err.style.display='none';
+  document.getElementById('tp').value='';
+  curT=t;
+  loadTDash();
+  go('t-dash');
+}
+
+// ── TEACHER DASHBOARD ─────────────────────────────
+let calYear=new Date().getFullYear(), calMonth=new Date().getMonth();
+let selectedDate=nowD();
+
+function loadTDash(){
+  const t=curT;
+  document.getElementById('tname').textContent=t.name;
+  const mStr=new Date().toLocaleString('fr-FR',{month:'long',year:'numeric'});
+  document.getElementById('tmonth').textContent=mStr.charAt(0).toUpperCase()+mStr.slice(1)+' — '+t.subject;
+  calYear=new Date().getFullYear();
+  calMonth=new Date().getMonth();
+  selectedDate=nowD();
+  renderCal();
+  renderStats();
+  renderSlotsForDate(selectedDate);
+  renderTEntries();
+}
+
+function calNav(dir){
+  calMonth+=dir;
+  if(calMonth>11){calMonth=0;calYear++;}
+  if(calMonth<0){calMonth=11;calYear--;}
+  renderCal();
+}
+
+function renderCal(){
+  const d=load();
+  const t=d.teachers.find(x=>x.id===curT.id);
+  const sch=t&&t.schedule?t.schedule:{};
+  const entries=d.entries.filter(e=>e.tid===curT.id);
+
+  const months=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  document.getElementById('cal-title').textContent=months[calMonth]+' '+calYear;
+
+  const grid=document.getElementById('cal-grid');
+  grid.innerHTML='';
+  const dayNames=['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+  dayNames.forEach(n=>{const d=document.createElement('div');d.className='cal-day-name';d.textContent=n;grid.appendChild(d);});
+
+  const first=new Date(calYear,calMonth,1);
+  let startDay=first.getDay()-1;if(startDay<0)startDay=6;
+  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+
+  for(let i=0;i<startDay;i++){
+    const c=document.createElement('div');c.className='cal-cell empty';grid.appendChild(c);
+  }
+
+  for(let day=1;day<=daysInMonth;day++){
+    const dateStr=calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+    const jsDay=new Date(calYear,calMonth,day).getDay();
+    const dayName2=DAY_NAMES[jsDay];
+    const hasSlot=sch[dayName2]&&sch[dayName2].active;
+    const dayEntries=entries.filter(e=>e.date===dateStr);
+    const isPointed=dayEntries.length>0;
+    const isToday=dateStr===nowD();
+    const isSelected=dateStr===selectedDate;
+
+    const c=document.createElement('div');
+    let cls='cal-cell';
+    if(!hasSlot)cls+=' no-slot';
+    if(hasSlot)cls+=' has-slot';
+    if(isPointed)cls+=' pointed';
+    if(isToday)cls+=' today-cell';
+    if(isSelected)cls+=' selected';
+    c.className=cls;
+    c.textContent=day;
+    if(hasSlot){
+      c.title=dayName2+' '+sch[dayName2].start+'→'+sch[dayName2].end;
+      c.onclick=()=>selectDate(dateStr);
+    }
+    grid.appendChild(c);
+  }
+}
+
+function selectDate(dateStr){
+  selectedDate=dateStr;
+  renderCal();
+  renderSlotsForDate(dateStr);
+}
+
+function renderStats(){
+  const d=load();
+  const t=d.teachers.find(x=>x.id===curT.id);
+  const rate=t?t.rate||0:0;
+  const all=d.entries.filter(e=>e.tid===curT.id&&e.status!=='rejected');
+  const month=all.filter(e=>e.date.startsWith(nowM()));
+  const today=all.filter(e=>e.date===nowD());
+  const sumM=arr=>arr.reduce((s,e)=>s+mins(e.s,e.f),0);
+  document.getElementById('st0').textContent=dur(sumM(today));
+  document.getElementById('st1').textContent=dur(sumM(month));
+  document.getElementById('st2').textContent=dur(sumM(all));
+  document.getElementById('st3').textContent=fm((sumM(month)/60)*rate);
+}
+
+function renderSlotsForDate(dateStr){
+  const d=load();
+  const t=d.teachers.find(x=>x.id===curT.id);
+  const sch=t&&t.schedule?t.schedule:{};
+  const dName=dayName(dateStr);
+  const cont=document.getElementById('t-slots-today');
+  const isPast=dateStr<=nowD();
+  document.getElementById('t-pointer-label').textContent=
+    `Pointer — ${dName} ${fd(dateStr)}${dateStr===nowD()?' (Auj)':''}`;
+
+  const alreadyPointed=d.entries.filter(e=>e.tid===curT.id&&e.date===dateStr);
+
+  if(!sch[dName]||!sch[dName].active){
+    cont.innerHTML=`<div style="color:var(--muted);font-size:.85rem;padding:12px 0">
+      Aucun cours prévu le ${dName} selon votre tableau de service.</div>`;
+    document.querySelector('#t-pointer-box .btn').style.display='none';
+    return;
+  }
+  document.querySelector('#t-pointer-box .btn').style.display='';
+
+  const slot=sch[dName];
+  const alreadyDone=alreadyPointed.find(e=>e.s===slot.start&&e.f===slot.end);
+  const future=dateStr>nowD();
+
+  cont.innerHTML=`
+    <div class="slot-card ${alreadyDone?'checked':''}" ${!future&&!alreadyDone?'onclick="toggleSlot(this)"':''} style="${future?'opacity:.5;cursor:not-allowed':''}">
+      <input type="checkbox" class="slot-check" ${alreadyDone?'checked':''} ${future?'disabled':''}>
+      <div class="slot-info">
+        <div class="slot-day">${dName} — ${slot.note||t.subject}</div>
+        <div class="slot-time">${slot.start} → ${slot.end}</div>
+        <div class="slot-note">${dur(mins(slot.start,slot.end))}</div>
+      </div>
+      <div class="slot-dur">${fm((mins(slot.start,slot.end)/60)*(t.rate||0))}</div>
+    </div>
+    ${alreadyDone?`<div style="color:var(--green);font-size:.82rem;margin-top:8px">✓ Pointage déjà envoyé</div>`:''}
+    ${future?`<div style="color:var(--muted);font-size:.82rem;margin-top:8px">Date future — pointage impossible.</div>`:''}`;
+}
+
+function toggleSlot(card){
+  const chk=card.querySelector('.slot-check');
+  chk.checked=!chk.checked;
+  card.classList.toggle('checked',chk.checked);
+}
+
+function submitPointing(){
+  if(selectedDate>nowD()){toast('Impossible de pointer une date future.',true);return;}
+  const d=load();
+  const t=d.teachers.find(x=>x.id===curT.id);
+  const sch=t&&t.schedule?t.schedule:{};
+  const dName=dayName(selectedDate);
+  const slot=sch[dName];
+  if(!slot||!slot.active){toast('Aucun cours prévu ce jour.',true);return;}
+  const card=document.querySelector('#t-slots-today .slot-card');
+  if(!card){toast('Aucun créneau.',true);return;}
+  const chk=card.querySelector('.slot-check');
+  if(!chk.checked){toast('Cochez le créneau avant d envoyer.',true);return;}
+  const exists=d.entries.find(e=>e.tid===curT.id&&e.date===selectedDate&&e.s===slot.start&&e.f===slot.end);
+  if(exists){toast('Déjà pointé pour ce jour.',true);return;}
+  d.entries.push({
+    id:uid(),tid:curT.id,date:selectedDate,
+    s:slot.start,f:slot.end,
+    note:slot.note||t.subject,
+    status:'pending',
+    submittedAt:new Date().toISOString()
+  });
+  save(d);
+  renderStats();
+  renderCal();
+  renderSlotsForDate(selectedDate);
+  renderTEntries();
+  toast('Pointage envoyé ✓');
+}
+
+function renderTEntries(){
+  const d=load();
+  const t=d.teachers.find(x=>x.id===curT.id);
+  const rate=t?t.rate||0:0;
+  const all=d.entries.filter(e=>e.tid===curT.id);
+  const month=all.filter(e=>e.date.startsWith(nowM()));
+
+  function rows(tbId,emId,arr){
+    const tb=document.getElementById(tbId),em=document.getElementById(emId);
+    tb.innerHTML='';
+    if(!arr.length){em.style.display='block';return;}em.style.display='none';
+    [...arr].sort((a,b)=>a.date<b.date?1:-1).forEach(e=>{
+      const m=mins(e.s,e.f);
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td>${fd(e.date)}</td>
+        <td style="color:var(--muted);font-size:.8rem">${dayName(e.date)}</td>
+        <td><span class="badge">${e.s}</span></td>
+        <td><span class="badge">${e.f}</span></td>
+        <td class="hc">${dur(m)}</td>
+        <td class="sc2">${e.status==='rejected'?'—':fm((m/60)*rate)}</td>
+        <td style="color:var(--muted);font-size:.8rem">${e.note||'—'}</td>
+        <td>${statusBadge(e.status)}</td>`;
+      tb.appendChild(tr);
+    });
+  }
+  rows('r0','e0',all.filter(e=>e.date===nowD()));
+  rows('r1','e1',month);
+  rows('r2','e2',all);
+}
+
+let ctab='tt0';
+function tTab(tab){
+  ctab=tab;
+  document.querySelectorAll('.tabs')[0].querySelectorAll('.tab').forEach((el,i)=>{
+    el.classList.toggle('on',['tt0','tt1','tt2'][i]===tab);
+  });
+  ['tt0','tt1','tt2'].forEach(id=>document.getElementById(id).classList.toggle('on',id===tab));
+}
+
+// ── DIRECTOR LOGIN ────────────────────────────────
+function dLogin(){
+  const pin=document.getElementById('dp').value;
+  const err=document.getElementById('de');
+  if(pin!==DIR_PIN){err.style.display='block';return;}
+  err.style.display='none';
+  document.getElementById('dp').value='';
+  document.getElementById('dfm').value=nowM();
+  document.getElementById('dem').value=nowM();
+  document.getElementById('dv-date').value=nowD();
+  go('d-dash');
+  loadQuick();
+}
+
+let dtab='dq';
+function dTab(tab){
+  dtab=tab;
+  document.querySelectorAll('.tabs')[1].querySelectorAll('.tab').forEach((el,i)=>{
+    el.classList.toggle('on',['dq','do','dv','de','ds','dt'][i]===tab);
+  });
+  ['dq','do','dv','de','ds','dt'].forEach(id=>document.getElementById(id).classList.toggle('on',id===tab));
+  if(tab==='dq')loadQuick();
+  if(tab==='do')loadOverview();
+  if(tab==='dv')loadValidation();
+  if(tab==='de')loadEntries();
+  if(tab==='ds')initScheduleTab();
+  if(tab==='dt')loadTTeachers();
+}
+
+// ── OVERVIEW ──────────────────────────────────────
+function loadOverview(){
+  const month=document.getElementById('dfm').value||nowM();
+  document.getElementById('dmonth').textContent=
+    new Date(month+'-01').toLocaleString('fr-FR',{month:'long',year:'numeric'});
+  const d=load();
+  const entries=d.entries.filter(e=>e.date.startsWith(month)&&e.status!=='rejected');
+  const salaries=d.salaries.filter(s=>s.month===month);
+  let totH=0,totS=0,totP=0;
+  const tb=document.getElementById('ovr');tb.innerHTML='';
+  d.teachers.forEach(t=>{
+    const tE=entries.filter(e=>e.tid===t.id);
+    const tM=tE.reduce((s,e)=>s+mins(e.s,e.f),0);
+    const tS=Math.round((tM/60)*(t.rate||0));
+    const tP=Math.round(salaries.filter(s=>s.tid===t.id).reduce((s,p)=>s+Number(p.amount),0));
+    totH+=tM;totS+=tS;totP+=tP;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><strong>${t.name}</strong></td>
+      <td style="color:var(--muted);font-size:.8rem">${t.subject}</td>
+      <td style="font-family:'IBM Plex Mono',monospace;color:var(--gold)">${t.rate||0} MAD/h</td>
+      <td class="hc">${dur(tM)}</td><td class="sc2">${fm(tS)}</td>
+      <td class="pc">${fm(tP)}</td>
+      <td class="${tS-tP>0?'rc':'pc'}">${fm(tS-tP)}</td>
+      <td><button class="pb" onclick="openModal('${t.id}','${t.name}','${month}',${tM},${tS},${tP})">💰 Paiements</button></td>`;
+    tb.appendChild(tr);
+  });
+  document.getElementById('dn0').textContent=d.teachers.length;
+  document.getElementById('dn1').textContent=dur(totH);
+  document.getElementById('dn2').textContent=fm(totS);
+  document.getElementById('dn3').textContent=fm(totP);
+  document.getElementById('dn4').textContent=fm(totS-totP);
+}
+
+// ── VALIDATION ────────────────────────────────────
+let dvCurrentTeacher = null;
+
+function loadValidation(){
+  dvCurrentTeacher = null;
+  document.getElementById('dv-prof-list').style.display = 'flex';
+  document.getElementById('dv-detail').style.display = 'none';
+  const d = load();
+  const cont = document.getElementById('dv-prof-list');
+  cont.innerHTML = '';
+
+  d.teachers.forEach(t => {
+    const pending = d.entries.filter(e => e.tid===t.id && e.status==='pending').length;
+    const total = d.entries.filter(e => e.tid===t.id).length;
+    const card = document.createElement('div');
+    card.style.cssText = 'background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all .2s;box-shadow:var(--sh)';
+    card.onmouseover = () => { card.style.borderColor='var(--green)'; card.style.background='var(--surface2)'; };
+    card.onmouseout = () => { card.style.borderColor='var(--border)'; card.style.background='var(--surface)'; };
+    card.innerHTML = `
+      <div style="font-size:2rem">👨‍🏫</div>
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:.95rem">${t.name}</div>
+        <div style="font-size:.75rem;color:var(--muted)">${t.subject}</div>
+      </div>
+      <div style="text-align:center;min-width:60px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.2rem;font-weight:500;color:var(--text)">${total}</div>
+        <div style="font-size:.65rem;color:var(--muted);text-transform:uppercase">Pointages</div>
+      </div>
+      ${pending>0
+        ? `<div style="background:#fff8e1;border:1px solid #f0c040;border-radius:8px;padding:6px 14px;font-size:.8rem;font-weight:600;color:var(--warn)">${pending} en attente</div>`
+        : `<div style="background:var(--greenlt);border:1px solid rgba(45,106,79,.2);border-radius:8px;padding:6px 14px;font-size:.8rem;color:var(--green)">A jour ✓</div>`
+      }
+      <div style="color:var(--muted);font-size:1.2rem">›</div>`;
+    card.onclick = () => openDvDetail(t.id);
+    cont.appendChild(card);
+  });
+
+  if(!d.teachers.length) {
+    cont.innerHTML = '<div class="empty">Aucun professeur.</div>';
+  }
+}
+
+function openDvDetail(tid) {
+  dvCurrentTeacher = tid;
+  const d = load();
+  const t = d.teachers.find(x => x.id===tid);
+  if(!t) return;
+
+  document.getElementById('dv-prof-list').style.display = 'none';
+  document.getElementById('dv-detail').style.display = 'block';
+  document.getElementById('dv-prof-name').textContent = t.name;
+  document.getElementById('dv-prof-sub').textContent = t.subject + ' — ' + (t.rate||0) + ' MAD/h';
+
+  // Render schedule
+  const sch = t.schedule || {};
+  const schTb = document.getElementById('dv-sch-rows');
+  const schEm = document.getElementById('dv-sch-empty');
+  schTb.innerHTML = '';
+  const activeDays = DAYS.filter(day => sch[day] && sch[day].active);
+  if(!activeDays.length) { schEm.style.display='block'; }
+  else {
+    schEm.style.display = 'none';
+    activeDays.forEach(day => {
+      const s = sch[day];
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td><strong>${day}</strong></td>
+        <td><span class="badge">${s.start}</span></td>
+        <td><span class="badge">${s.end}</span></td>
+        <td class="hc">${dur(mins(s.start,s.end))}</td>
+        <td style="color:var(--muted);font-size:.8rem">${s.note||'—'}</td>`;
+      schTb.appendChild(tr);
+    });
+  }
+
+  // Render pointages
+  renderDvPointages(tid);
+}
+
+function renderDvPointages(tid) {
+  const d = load();
+  const t = d.teachers.find(x => x.id===tid);
+  const rate = t ? t.rate||0 : 0;
+  const entries = [...d.entries.filter(e=>e.tid===tid)].sort((a,b)=>a.date<b.date?1:-1);
+  const tb = document.getElementById('dv-point-rows');
+  const em = document.getElementById('dv-point-empty');
+  tb.innerHTML = '';
+  if(!entries.length){ em.style.display='block'; return; } em.style.display='none';
+  entries.forEach(e => {
+    const m = mins(e.s, e.f);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${fd(e.date)}</td>
+      <td style="color:var(--muted);font-size:.8rem">${dayName(e.date)}</td>
+      <td><span class="badge">${e.s}</span></td>
+      <td><span class="badge">${e.f}</span></td>
+      <td class="hc">${dur(m)}</td>
+      <td class="sc2">${e.status==='rejected'?'—':fm((m/60)*rate)}</td>
+      <td style="color:var(--muted);font-size:.8rem">${e.note||'—'}</td>
+      <td>${statusBadge(e.status)}</td>
+      <td style="display:flex;gap:6px;flex-wrap:wrap">
+        ${e.status!=='validated'?`<button class="vb" onclick="validateEntry('${e.id}','validated')">✓</button>`:''}
+        ${e.status!=='rejected'?`<button class="db" onclick="validateEntry('${e.id}','rejected')">✗</button>`:''}
+      </td>`;
+    tb.appendChild(tr);
+  });
+}
+
+function closeDvDetail() {
+  dvCurrentTeacher = null;
+  document.getElementById('dv-prof-list').style.display = 'flex';
+  document.getElementById('dv-detail').style.display = 'none';
+}
+
+function validateAllPending() {
+  if(!dvCurrentTeacher) return;
+  const d = load();
+  let count = 0;
+  d.entries.forEach(e => {
+    if(e.tid===dvCurrentTeacher && e.status==='pending') {
+      e.status='validated'; e.validatedAt=new Date().toISOString(); count++;
+    }
+  });
+  save(d);
+  renderDvPointages(dvCurrentTeacher);
+  loadQuick();
+  toast(count + ' pointage(s) validé(s) ✓');
+}
+
+function validateEntry(id,status){
+  const d=load();
+  const e=d.entries.find(x=>x.id===id);
+  if(e){e.status=status;e.validatedAt=new Date().toISOString();}
+  save(d);
+  if(dvCurrentTeacher) renderDvPointages(dvCurrentTeacher);
+  else loadValidation();
+  loadQuick();
+  toast(status==='validated'?'Validé ✓':'Rejeté');
+}
+
+// ── DETAIL HEURES ─────────────────────────────────
+function loadEntries(){
+  const d=load();
+  const sel=document.getElementById('det');
+  const prev=sel.value;
+  sel.innerHTML='<option value="">Tous</option>';
+  d.teachers.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.name;sel.appendChild(o);});
+  sel.value=prev;
+  const month=document.getElementById('dem').value||nowM();
+  const tId=document.getElementById('det').value;
+  const statusF=document.getElementById('de-status').value;
+  let entries=d.entries.filter(e=>e.date.startsWith(month));
+  if(tId)entries=entries.filter(e=>e.tid===tId);
+  if(statusF)entries=entries.filter(e=>e.status===statusF);
+  const tb=document.getElementById('etr');
+  const em=document.getElementById('eem');
+  tb.innerHTML='';
+  if(!entries.length){em.style.display='block';return;}em.style.display='none';
+  [...entries].sort((a,b)=>a.date<b.date?1:-1).forEach(e=>{
+    const t=d.teachers.find(x=>x.id===e.tid);
+    const m=mins(e.s,e.f);
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><strong>${t?t.name:'?'}</strong></td>
+      <td>${fd(e.date)}</td>
+      <td style="color:var(--muted);font-size:.8rem">${dayName(e.date)}</td>
+      <td><span class="badge">${e.s}</span></td>
+      <td><span class="badge">${e.f}</span></td>
+      <td class="hc">${dur(m)}</td>
+      <td class="sc2">${e.status==='rejected'?'—':fm((m/60)*((t&&t.rate)||0))}</td>
+      <td style="color:var(--muted);font-size:.8rem">${e.note||'—'}</td>
+      <td>${statusBadge(e.status)}</td>`;
+    tb.appendChild(tr);
+  });
+}
+
+// ── SCHEDULE ──────────────────────────────────────
+function initScheduleTab(){
+  const d=load();
+  const sel=document.getElementById('ssp');
+  sel.innerHTML='<option value="">— Choisir —</option>';
+  d.teachers.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.name;sel.appendChild(o);});
+  document.getElementById('sch-editor').style.display='none';
+}
+
+function loadScheduleEditor(){
+  const tid=document.getElementById('ssp').value;
+  if(!tid){document.getElementById('sch-editor').style.display='none';return;}
+  const d=load();
+  const t=d.teachers.find(x=>x.id===tid);
+  if(!t)return;
+  const sch=t.schedule||{};
+  document.getElementById('sch-title').textContent='Horaire de '+t.name+' ('+t.subject+')';
+  document.getElementById('sch-editor').style.display='block';
+  const cont=document.getElementById('sch-days');
+  cont.innerHTML='';
+  DAYS.forEach(day=>{
+    const dd=sch[day]||{active:false,start:'',end:'',note:''};
+    const div=document.createElement('div');
+    div.className='day-row'+(dd.active?' active-day':'');
+    div.id='dr-'+day;
+    div.innerHTML=`
+      <input type="checkbox" class="day-check" id="chk-${day}" ${dd.active?'checked':''}
+        onchange="toggleDayRow('${day}')">
+      <label class="day-label" for="chk-${day}">${day}</label>
+      <div class="day-inputs" id="inp-${day}" style="display:${dd.active?'flex':'none'}">
+        <input type="time" id="ds-${day}" value="${dd.start||''}">
+        <span>→</span>
+        <input type="time" id="df-${day}" value="${dd.end||''}">
+        <input type="text" id="dn-${day}" value="${dd.note||''}" placeholder="Matière/Note">
+      </div>`;
+    cont.appendChild(div);
+  });
+}
+
+function toggleDayRow(day){
+  const chk=document.getElementById('chk-'+day);
+  const inp=document.getElementById('inp-'+day);
+  const row=document.getElementById('dr-'+day);
+  inp.style.display=chk.checked?'flex':'none';
+  row.classList.toggle('active-day',chk.checked);
+}
+
+function saveSchedule(){
+  const tid=document.getElementById('ssp').value;
+  if(!tid)return;
+  const d=load();
+  const t=d.teachers.find(x=>x.id===tid);
+  if(!t)return;
+  const sch={};
+  DAYS.forEach(day=>{
+    const chk=document.getElementById('chk-'+day);
+    if(chk&&chk.checked){
+      sch[day]={
+        active:true,
+        start:document.getElementById('ds-'+day)?.value||'',
+        end:document.getElementById('df-'+day)?.value||'',
+        note:document.getElementById('dn-'+day)?.value||''
+      };
+    }
+  });
+  t.schedule=sch;
+  save(d);
+  toast('Tableau de service enregistré ✓');
+}
+
+// ── TEACHERS ──────────────────────────────────────
+function loadTTeachers(){
+  const d=load();
+  const tb=document.getElementById('ttr');tb.innerHTML='';
+  d.teachers.forEach(t=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><strong>${t.name}</strong></td>
+      <td style="color:var(--muted)">${t.subject}</td>
+      <td style="font-family:'IBM Plex Mono',monospace;color:var(--green)">${t.pin}</td>
+      <td><input type="number" value="${t.rate||0}" min="0" step="5"
+        style="width:80px;background:var(--bg);border:1.5px solid var(--border);border-radius:6px;padding:4px 8px;font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--gold);outline:none"
+        onchange="updateRate('${t.id}',this.value)"> MAD/h</td>
+      <td><button class="db" onclick="delTeacher('${t.id}')">Supprimer</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+
+function addTeacher(){
+  const name=document.getElementById('nn').value.trim();
+  const pin=document.getElementById('nc').value.trim();
+  const subject=document.getElementById('nm').value.trim();
+  const rate=Number(document.getElementById('nr').value)||0;
+  if(!name||!pin){toast('Nom et code requis.',true);return;}
+  const d=load();
+  d.teachers.push({id:uid(),name,subject:subject||'—',pin,rate,schedule:{}});
+  save(d);
+  ['nn','nc','nm','nr'].forEach(id=>document.getElementById(id).value='');
+  loadTTeachers();
+  toast('Professeur ajouté ✓');
+}
+
+function delTeacher(id){
+  if(!confirm('Supprimer ce professeur et toutes ses entrées ?'))return;
+  const d=load();
+  d.teachers=d.teachers.filter(t=>t.id!==id);
+  d.entries=d.entries.filter(e=>e.tid!==id);
+  save(d);loadTTeachers();toast('Supprimé');
+}
+
+function updateRate(id,rate){
+  const d=load();
+  const t=d.teachers.find(x=>x.id===id);
+  if(t)t.rate=Number(rate);
+  save(d);toast('Taux mis à jour ✓');
+}
+
+// ── SALARY MODAL ──────────────────────────────────
+let _sm={};
+function openModal(tid,name,month,tM,tS,tP){
+  _sm={tid,name,month,tM,tS,tP};
+  document.getElementById('smt').textContent=name;
+  document.getElementById('sms').textContent='Paiements — '+
+    new Date(month+'-01').toLocaleString('fr-FR',{month:'long',year:'numeric'});
+  document.getElementById('sm0').textContent=fm(tS);
+  document.getElementById('sm1').textContent=fm(tP);
+  document.getElementById('sm2').textContent=fm(tS-tP);
+  document.getElementById('spa').value=tS-tP>0?tS-tP:'';
+  document.getElementById('spn').value='';
+  renderPayHistory();
+  document.getElementById('smo').classList.add('on');
+}
+
+function renderPayHistory(){
+  const d=load();
+  const pays=d.salaries.filter(s=>s.tid===_sm.tid&&s.month===_sm.month);
+  const tb=document.getElementById('shist');
+  const em=document.getElementById('sem');
+  tb.innerHTML='';
+  if(!pays.length){em.style.display='block';return;}em.style.display='none';
+  const totalPaid=pays.reduce((s,p)=>s+Number(p.amount),0);
+  _sm.tP=Math.round(totalPaid);
+  document.getElementById('sm1').textContent=fm(_sm.tP);
+  document.getElementById('sm2').textContent=fm(_sm.tS-_sm.tP);
+  pays.forEach(p=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td style="color:var(--muted);font-size:.8rem">${p.date}</td>
+      <td class="sc2">${fm(p.amount)}</td>
+      <td style="color:var(--muted);font-size:.8rem">${p.note||'—'}</td>
+      <td><button class="db" onclick="delPay('${p.id}')">✕</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+
+function savePay(){
+  const amount=Number(document.getElementById('spa').value);
+  const note=document.getElementById('spn').value.trim();
+  if(!amount||amount<=0){toast('Montant invalide.',true);return;}
+  const d=load();
+  d.salaries.push({id:uid(),tid:_sm.tid,month:_sm.month,amount,note,date:new Date().toLocaleDateString('fr-FR')});
+  save(d);renderPayHistory();loadOverview();toast('Paiement enregistré ✓');
+}
+
+function delPay(id){
+  const d=load();d.salaries=d.salaries.filter(s=>s.id!==id);save(d);
+  renderPayHistory();loadOverview();toast('Supprimé');
+}
+
+function closeModal(){document.getElementById('smo').classList.remove('on');}
+document.getElementById('smo').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+// ── QUICK DASHBOARD ──────────────────────────────
+function loadQuick(){
+  const d=load();
+  const now=new Date();
+  const month=nowM();
+  const monthLabel=now.toLocaleString('fr-FR',{month:'long',year:'numeric'});
+  document.getElementById('dq-date').textContent=
+    monthLabel.charAt(0).toUpperCase()+monthLabel.slice(1)+
+    ' — '+now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+
+  const entries=d.entries.filter(e=>e.date.startsWith(month)&&e.status!=='rejected');
+  const pending=d.entries.filter(e=>e.status==='pending').length;
+  const cont=document.getElementById('dq-cards');
+  cont.innerHTML='';
+
+  // Pending alert
+  if(pending>0){
+    const alert=document.createElement('div');
+    alert.style.cssText='background:#fff8e1;border:1.5px solid #f0c040;border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;margin-bottom:4px';
+    alert.innerHTML=`<span style="font-size:1.4rem">⏳</span>
+      <div><div style="font-weight:600;font-size:.9rem">${pending} pointage${pending>1?'s':''} en attente de validation</div>
+      <div style="font-size:.75rem;color:var(--muted);margin-top:2px">Cliquez pour valider</div></div>`;
+    alert.onclick=()=>dTab('dv');
+    cont.appendChild(alert);
+  }
+
+  // Teacher cards
+  d.teachers.forEach(t=>{
+    const tE=entries.filter(e=>e.tid===t.id);
+    const validated=tE.filter(e=>e.status==='validated');
+    const tPending=d.entries.filter(e=>e.tid===t.id&&e.status==='pending').length;
+    const totalMins=tE.reduce((s,e)=>s+mins(e.s,e.f),0);
+    const validMins=validated.reduce((s,e)=>s+mins(e.s,e.f),0);
+    const salary=Math.round((validMins/60)*(t.rate||0));
+
+    // Get today's schedule
+    const sch=t.schedule||{};
+    const todayName=dayName(nowD());
+    const todaySlot=sch[todayName]&&sch[todayName].active?sch[todayName]:null;
+    const pointedToday=d.entries.find(e=>e.tid===t.id&&e.date===nowD());
+
+    const card=document.createElement('div');
+    card.style.cssText='background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:var(--sh);display:flex;align-items:center;gap:16px;flex-wrap:wrap';
+
+    // Status dot
+    let dotColor='var(--border)';
+    let dotTitle='Pas de cours ce jour';
+    if(todaySlot&&pointedToday){dotColor='var(--green)';dotTitle='A pointe ce jour';}
+    else if(todaySlot&&!pointedToday){dotColor='var(--warn)';dotTitle='Non encore pointe';}
+
+    card.innerHTML=`
+      <div style="width:12px;height:12px;border-radius:50%;background:${dotColor};flex-shrink:0" title="${dotTitle}"></div>
+      <div style="flex:1;min-width:160px">
+        <div style="font-weight:600;font-size:.95rem">${t.name}</div>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:2px">${t.subject}</div>
+      </div>
+      <div style="text-align:center;min-width:80px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.3rem;font-weight:500;color:var(--green)">${dur(totalMins)}</div>
+        <div style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">Ce mois</div>
+      </div>
+      <div style="text-align:center;min-width:100px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:1.1rem;font-weight:600;color:var(--gold)">${fm(salary)}</div>
+        <div style="font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">Salaire validé</div>
+      </div>
+      ${tPending>0?`<div style="background:#fff8e1;border:1px solid #f0c040;border-radius:6px;padding:4px 10px;font-size:.72rem;font-weight:600;color:var(--warn)">${tPending} en attente</div>`:''}
+      ${todaySlot?`<div style="font-size:.72rem;color:var(--muted);min-width:100px">${todaySlot.start}→${todaySlot.end}<br>${pointedToday?'<span style="color:var(--green)">✓ Pointé</span>':'<span style="color:var(--warn)">⏳ Pas encore</span>'}</div>`:'<div style="font-size:.72rem;color:var(--border);min-width:80px">Pas de cours</div>'}`;
+    cont.appendChild(card);
+  });
+
+  if(d.teachers.length===0){
+    cont.innerHTML='<div class="empty">Aucun professeur enregistré.</div>';
+  }
+}
+
+// ── EXPORT ────────────────────────────────────────
+function exportCSV(){
+  const month=document.getElementById('dfm').value||nowM();
+  const d=load();
+  const entries=d.entries.filter(e=>e.date.startsWith(month)&&e.status!=='rejected');
+  let csv='Professeur,Matière,Date,Jour,Début,Fin,Durée (min),Durée,Taux/h,Montant (MAD),Statut,Note\n';
+  [...entries].sort((a,b)=>a.date<b.date?1:-1).forEach(e=>{
+    const t=d.teachers.find(x=>x.id===e.tid);
+    const m=mins(e.s,e.f);const rate=t?t.rate||0:0;
+    csv+=`"${t?t.name:'?'}","${t?t.subject:''}","${fd(e.date)}","${dayName(e.date)}","${e.s}","${e.f}","${m}","${dur(m)}","${rate}","${Math.round((m/60)*rate)}","${e.status}","${e.note||''}"\n`;
+  });
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=`riad_manahil_${month}.csv`;a.click();
+  URL.revokeObjectURL(url);toast('Export téléchargé ✓');
+}
+
+// ── KEYBOARD ──────────────────────────────────────
+document.getElementById('tp').addEventListener('keydown',e=>{if(e.key==='Enter')tLogin();});
+document.getElementById('dp').addEventListener('keydown',e=>{if(e.key==='Enter')dLogin();});
+</script>
+</body>
+</html>
